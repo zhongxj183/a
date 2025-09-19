@@ -29,3 +29,7 @@ for dir in neuron-dotnet-api neuron-nodejs-ui neuron-platform-api neuron-python3
   helm package "${dir}/" --app-version 1.0.0
 done
 helm package nacos/ --app-version 3.0.1
+
+for pkg in `ls *.tgz`; do
+  helm cm-push "${pkg}" neuron -u admin -p Harbor12345
+done
