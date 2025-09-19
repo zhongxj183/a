@@ -1,0 +1,6 @@
+-- 查询当前的key
+SELECT ProjectPhoto FROM `projects` WHERE ProjectPhoto != '';
+-- select语句查询，预览修改后的key
+SELECT CONCAT('project/',CASE WHEN RIGHT ( `ProjectPhoto`, 4 ) = '.jpg' THEN REPLACE ( `ProjectPhoto`, ':', '_' ) ELSE CONCAT( REPLACE ( `ProjectPhoto`, ':', '_' ), '.jpg' ) END ) AS ReplacedAmsImage FROM `projects` WHERE ProjectPhoto != '';
+-- 修改key
+UPDATE `projects` SET `ProjectPhoto` = CONCAT('project/',CASE WHEN RIGHT ( `ProjectPhoto`, 4 ) = '.jpg' THEN REPLACE ( `ProjectPhoto`, ':', '_' ) ELSE CONCAT( REPLACE ( `ProjectPhoto`, ':', '_' ), '.jpg' ) END ) WHERE ProjectPhoto != '';
