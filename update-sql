@@ -22,3 +22,10 @@ UPDATE `app` SET
 `AppAvatar` = CONCAT('app/', CASE WHEN RIGHT(`AppAvatar`, 4) = '.jpg' THEN REPLACE(`AppAvatar`, ':', '_') ELSE CONCAT(REPLACE(`AppAvatar`, ':', '_'), '.jpg') END),
 `AppImage` = CONCAT('app/', CASE WHEN RIGHT(`AppImage`, 4) = '.jpg' THEN REPLACE(`AppImage`, ':', '_') ELSE CONCAT(REPLACE(`AppImage`, ':', '_'), '.jpg') END),
 `Screenshots` = CONCAT('app/', CASE WHEN RIGHT(`Screenshots`, 4) = '.jpg' THEN REPLACE(`Screenshots`, ':', '_') ELSE CONCAT(REPLACE(`Screenshots`, ':', '_'), '.jpg') END);
+
+
+
+for dir in neuron-dotnet-api neuron-nodejs-ui neuron-platform-api neuron-python3-api neuron-gateway neuron-xxl-job; do
+  helm package "${dir}/" --app-version 1.0.0
+done
+helm package nacos/ --app-version 3.0.1
