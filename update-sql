@@ -4,3 +4,21 @@ SELECT ProjectPhoto FROM `projects` WHERE ProjectPhoto != '';
 SELECT CONCAT('project/',CASE WHEN RIGHT ( `ProjectPhoto`, 4 ) = '.jpg' THEN REPLACE ( `ProjectPhoto`, ':', '_' ) ELSE CONCAT( REPLACE ( `ProjectPhoto`, ':', '_' ), '.jpg' ) END ) AS ReplacedAmsImage FROM `projects` WHERE ProjectPhoto != '';
 -- 修改key
 UPDATE `projects` SET `ProjectPhoto` = CONCAT('project/',CASE WHEN RIGHT ( `ProjectPhoto`, 4 ) = '.jpg' THEN REPLACE ( `ProjectPhoto`, ':', '_' ) ELSE CONCAT( REPLACE ( `ProjectPhoto`, ':', '_' ), '.jpg' ) END ) WHERE ProjectPhoto != '';
+
+
+## app
+
+SELECT DISTINCT(AppAvatar) FROM (SELECT AppAvatar FROM `app`  UNION SELECT AppImage as AppAvatar FROM `app` UNION SELECT Screenshots as AppAvatar FROM `app` ) as T WHERE AppAvatar <> "string"
+
+UPDATE `app` 
+SET AppAvatar = REPLACE ( AppAvatar, 'https://neuron-cloud-site.s3.ap-east-1.amazonaws.com/', '' ),
+AppImage = REPLACE ( AppImage, 'https://neuron-cloud-site.s3.ap-east-1.amazonaws.com/', '' ),
+Screenshots = REPLACE ( Screenshots, 'https://neuron-cloud-site.s3.ap-east-1.amazonaws.com/', '' );
+
+-- 查询当前app表图片的key
+select AppAvatar,AppImage,Screenshots from `app`;
+-- 修改app表图片的key
+UPDATE `app` SET
+`AppAvatar` = CONCAT('app/', CASE WHEN RIGHT(`AppAvatar`, 4) = '.jpg' THEN REPLACE(`AppAvatar`, ':', '_') ELSE CONCAT(REPLACE(`AppAvatar`, ':', '_'), '.jpg') END),
+`AppImage` = CONCAT('app/', CASE WHEN RIGHT(`AppImage`, 4) = '.jpg' THEN REPLACE(`AppImage`, ':', '_') ELSE CONCAT(REPLACE(`AppImage`, ':', '_'), '.jpg') END),
+`Screenshots` = CONCAT('app/', CASE WHEN RIGHT(`Screenshots`, 4) = '.jpg' THEN REPLACE(`Screenshots`, ':', '_') ELSE CONCAT(REPLACE(`Screenshots`, ':', '_'), '.jpg') END);
